@@ -1,6 +1,7 @@
 package co.empresa.test.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,11 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import co.empresa.test.dao.EleccionDao;
-import co.empresa.test.dao.UsuarioDao;
 import co.empresa.test.modelo.Eleccion;
-import co.empresa.test.modelo.Usuario;
 
 /**
  * Servlet implementation class UsuarioServlet
@@ -95,14 +93,14 @@ public class EleccionServlet extends HttpServlet {
 	private void insertarUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, SQLException, IOException {
 		String nombre= request.getParameter("nombre");
-		String email= request.getParameter("email");
-		String pais= request.getParameter("pais");
+		Date email= request.getParameter("fechainicio");
+		Date pais= request.getParameter("fechafin");
+		String cargo= request.getParameter("cargo");
 		
+		Eleccion eleccion = new Eleccion (nombre, fechainicio, fechafin, cargo);
 		
-		Usuario usuario = new Usuario (nombre, email, pais);
-		
-	    eleccionDao.insert(usuario);
-	    System.out.println(usuario.toString());
+	    eleccionDao.insert(eleccion);
+	    System.out.println(eleccion.toString());
 		
 		response.sendRedirect("list");
 		}
@@ -114,7 +112,7 @@ public class EleccionServlet extends HttpServlet {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
-			Usuario usuarioActual = usuarioDao.select(id);
+			Eleccion usuarioActual = eleccionDao.select(id);
 			
 			request.setAttribute("usuario", usuarioActual);
 			
@@ -129,14 +127,17 @@ public class EleccionServlet extends HttpServlet {
 		    throws ServletException, SQLException, IOException {
 		        int id = Integer.parseInt(request.getParameter("id"));
 		        String nombre = request.getParameter("nombre");
-		        String email = request.getParameter("email");
-		        String pais = request.getParameter("pais");
+		        Date fechainicio = request.getParameter("fechainicio");
+		        Date fechafin = request.getParameter("fechafin");
+		        String cargo = request.getParameter("cargo");
 
-		        Usuario usuarioActual = eleccionDao.select(id);
+		        Eleccion usuarioActual = eleccionDao.select(id);
 		        usuarioActual.setNombre(nombre);
-		        usuarioActual.setEmail(email);
-		        usuarioActual.setPais(pais);
-		        System.out.println(usuarioActual.getEmail());
+		        usuarioActual.setFechainicio(fechainicio);
+		        usuarioActual.setFechafin(fechafin);
+		        usuarioActual.setCargo(cargo);
+		        
+		        System.out.println(usuarioActual.getFechainicio());
 		        eleccionDao.uptade(usuarioActual);
 		        response.sendRedirect("list");
 		    }

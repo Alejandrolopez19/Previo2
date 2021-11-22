@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import co.empresa.test.dao.CandidatoDao;
 import co.empresa.test.dao.UsuarioDao;
 import co.empresa.test.modelo.Usuario;
 
@@ -22,13 +23,13 @@ import co.empresa.test.modelo.Usuario;
 public class CandidatoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private UsuarioDao usuarioDao;
+	private CandidatoDao candidatoDao;
 	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UsuarioServlet() {
+    public CandidatoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,7 +38,7 @@ public class CandidatoServlet extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		this.usuarioDao = new UsuarioDao();
+		this.candidatoDao = new CandidatoDao();
 	}
 
 	/**
@@ -157,7 +158,7 @@ public class CandidatoServlet extends HttpServlet {
 		List <Usuario> listUsuarios = usuarioDao.selectAll();
 		request.setAttribute("listUsuarios", listUsuarios);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("usuariolist.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("candidato.jsp");
 	    dispatcher.forward(request, response);
 		
 }
