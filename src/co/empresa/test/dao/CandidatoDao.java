@@ -29,7 +29,7 @@ public class CandidatoDao {
 				PreparedStatement preparedStatement = conexion.setPreaparedStatement(INSERT_USUARIO_SQL);
 				preparedStatement.setString(1, candidato.getDocumento());
 				preparedStatement.setString(2, candidato.getNombre());
-				preparedStatement.setString(3, candidato.getNombre());
+				preparedStatement.setString(3, candidato.getApellido());
 				preparedStatement.setInt(4, candidato.getEleccion());
 				preparedStatement.setInt(5, candidato.getNumero());
 				System.out.println("Guardando candidato ....");
@@ -60,7 +60,7 @@ public class CandidatoDao {
 				PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreaparedStatement(UPDATE_USUARIO_SQL);
 				preparedStatement.setString(1, candidato.getDocumento());
 				preparedStatement.setString(2, candidato.getNombre());
-				preparedStatement.setString(3, candidato.getNombre());
+				preparedStatement.setString(3, candidato.getApellido());
 				preparedStatement.setInt(4, candidato.getEleccion());
 				preparedStatement.setInt(5, candidato.getNumero());
 				System.out.println("Guardando candidato ....");
@@ -88,27 +88,25 @@ public class CandidatoDao {
 	    		int id = rs.getInt("id");
 	    		String documento = rs.getString("documento");
 	    		String nombre = rs.getString("nombre");
-	    		int eleccion= rs.getString("eleccion");
+	    		String apellido = rs.getString("apellido");
+	    		int eleccion= rs.getInt("eleccion");
 	    		int numero = rs.getInt("numero");
-	    		Date fechainicio = rs.getDate("fechainicio");
-	    		Date fechafin = rs.getDate("fechafin");
-	    		String cargo = rs.getString("cargo");
-	    		elecciones.add(new Eleccion(id, nombre, fechainicio, fechafin, cargo));
+	    		candidatos.add(new Candidato(id, documento, nombre, apellido, eleccion, numero));
 	    	}
 	    	
 	    } catch (SQLException e) {
 			
 		}
 		
-	    return elecciones;
+	    return candidatos;
 	    
 		}
 		
 		
-		public Eleccion select(int id) {
-			Eleccion eleccion = null;
+		public Candidato select(int id) {
+			Candidato candidato = null;
 			
-			List <Eleccion> elecciones = new ArrayList<>();
+			List <Candidato> candidatos = new ArrayList<>();
 			
 	    try {
 		
@@ -119,18 +117,20 @@ public class CandidatoDao {
 	    	
 		    
 	    	while(rs.next()) {
+	    		String documento = rs.getString("documento");
 	    		String nombre = rs.getString("nombre");
-	    		Date fechainicio = rs.getDate("email");
-	    		Date fechafin = rs.getDate("pais");
-	    		String cargo = rs.getString("cargo");
-	    		eleccion = new Eleccion(id, nombre, fechainicio, fechafin, cargo);
+	    		String apellido = rs.getString("apellido");
+	    		int eleccion= rs.getInt("eleccion");
+	    		int numero = rs.getInt("numero");	
+	    		
+	    		candidato = new Candidato(id, documento,nombre, apellido, eleccion, numero);
 	    	}
 	    	
 	    } catch (SQLException e) {
 			
 		}
 		
-	    return eleccion;
+	    return candidato;
 	    
 		}
 		

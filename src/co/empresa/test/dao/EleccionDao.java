@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.empresa.test.modelo.Eleccion;
+import co.empresa.test.modelo.Usuario;
 import co.empresa.test.util.Conexion;
 public class EleccionDao {
      
@@ -53,13 +54,16 @@ public class EleccionDao {
 	
 
 	
-	public void uptade(Eleccion eleccion) throws SQLException {
+	public void uptade(Usuario usuarioActual) throws SQLException {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreaparedStatement(UPDATE_USUARIO_SQL);
-			preparedStatement.setString(1, eleccion.getNombre());
-			preparedStatement.setDate(2, eleccion.getFechainicio());
-			preparedStatement.setDate(3, eleccion.getFechafin());
-			preparedStatement.setString(4, eleccion.getCargo());
+			preparedStatement.setString(1, usuarioActual.getDocumento());
+			preparedStatement.setString(1, usuarioActual.getNombre());
+			preparedStatement.setString(2, usuarioActual.getApellido());
+			preparedStatement.setInt(3, 0);
+			preparedStatement.setDate(2, usuarioActual.getFechainicio());
+			preparedStatement.setDate(3, usuarioActual.getFechafin());
+			preparedStatement.setString(4, usuarioActual.getCargo());
 			System.out.println("Guardando eleccion ....");
 			conexion.execute();
 		} catch (SQLException e) {
